@@ -52,4 +52,55 @@
         android:key="pref_delete_swipe"
         android:title="@string/delete_swipe"
         android:defaultValue="false" />
+
+    <PreferenceCategory android:title="@string/swipe_gestures">
+        <ListPreference
+            android:key="pref_swipe_left_up"
+            android:title="@string/swipe_left_up"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="shift" />
+        <ListPreference
+            android:key="pref_swipe_left_down"
+            android:title="@string/swipe_left_down"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="alphabet" />
+        <ListPreference
+            android:key="pref_swipe_left_left"
+            android:title="@string/swipe_left_left"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="none" />
+        <ListPreference
+            android:key="pref_swipe_left_right"
+            android:title="@string/swipe_left_right"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="symbols" />
+        <ListPreference
+            android:key="pref_swipe_right_up"
+            android:title="@string/swipe_right_up"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="none" />
+        <ListPreference
+            android:key="pref_swipe_right_down"
+            android:title="@string/swipe_right_down"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="paste" />
+        <ListPreference
+            android:key="pref_swipe_right_left"
+            android:title="@string/swipe_right_left"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="undo" />
+        <ListPreference
+            android:key="pref_swipe_right_right"
+            android:title="@string/swipe_right_right"
+            android:entries="@array/swipe_action_entries"
+            android:entryValues="@array/swipe_action_values"
+            android:defaultValue="none" />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -64,6 +64,14 @@ public final class Settings extends BroadcastReceiver implements SharedPreferenc
     public static final String PREF_SHOW_NUMBER_ROW = "pref_show_number_row";
     public static final String PREF_SPACE_SWIPE = "pref_space_swipe";
     public static final String PREF_DELETE_SWIPE = "pref_delete_swipe";
+    public static final String PREF_SWIPE_LEFT_UP = "pref_swipe_left_up";
+    public static final String PREF_SWIPE_LEFT_DOWN = "pref_swipe_left_down";
+    public static final String PREF_SWIPE_LEFT_LEFT = "pref_swipe_left_left";
+    public static final String PREF_SWIPE_LEFT_RIGHT = "pref_swipe_left_right";
+    public static final String PREF_SWIPE_RIGHT_UP = "pref_swipe_right_up";
+    public static final String PREF_SWIPE_RIGHT_DOWN = "pref_swipe_right_down";
+    public static final String PREF_SWIPE_RIGHT_LEFT = "pref_swipe_right_left";
+    public static final String PREF_SWIPE_RIGHT_RIGHT = "pref_swipe_right_right";
 
     private static final float UNDEFINED_PREFERENCE_VALUE_FLOAT = -1.0f;
     private static final int UNDEFINED_PREFERENCE_VALUE_INT = -1;

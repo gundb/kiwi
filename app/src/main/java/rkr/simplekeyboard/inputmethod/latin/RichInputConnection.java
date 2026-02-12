@@ -476,6 +476,41 @@ public final class RichInputConnection {
         return mExpectedSelStart != INVALID_CURSOR_POSITION && mExpectedSelEnd != INVALID_CURSOR_POSITION;
     }
 
+    public void deleteLastWord(final rkr.simplekeyboard.inputmethod.latin.settings.SettingsValues settingsValues) {
+        if (!hasCursorPosition()) return;
+
+        final String text = mTextBeforeCursor;
+        if (text == null || text.length() == 0) return;
+
+        int length = text.length();
+        int deleteLength = 0;
+        int i = length;
+
+        // Skip trailing whitespace
+        while (i > 0) {
+            int cp = Character.codePointBefore(text, i);
+            if (!Character.isWhitespace(cp)) break;
+            int charCount = Character.charCount(cp);
+            deleteLength += charCount;
+            i -= charCount;
+        }
+
+        // Delete until separator or start
+        while (i > 0) {
+            int cp = Character.codePointBefore(text, i);
+            if (settingsValues.isWordSeparator(cp)) {
+                break;
+            }
+            int charCount = Character.charCount(cp);
+            deleteLength += charCount;
+            i -= charCount;
+        }
+
+        if (deleteLength > 0) {
+            deleteTextBeforeCursor(deleteLength);
+        }
+    }
+
     /**
      * Some chars, such as emoji consist of 2 chars (surrogate pairs). We should treat them as one character.
      * Some chars are joined with ZERO WIDTH JOINER (U+200D), pairs need to be counted

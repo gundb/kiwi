@@ -634,6 +634,9 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         switch (requestCode) {
             case Constants.CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER:
                 return showInputMethodPicker();
+            case Constants.CUSTOM_CODE_DELETE_WORD:
+                mInputLogic.mConnection.deleteLastWord(mSettings.getCurrent());
+                return true;
         }
         return false;
     }

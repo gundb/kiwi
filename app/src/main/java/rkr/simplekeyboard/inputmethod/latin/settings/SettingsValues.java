@@ -49,6 +49,14 @@ public class SettingsValues {
     public final boolean mShowNumberRow;
     public final boolean mSpaceSwipeEnabled;
     public final boolean mDeleteSwipeEnabled;
+    public final String mSwipeLeftUpAction;
+    public final String mSwipeLeftDownAction;
+    public final String mSwipeLeftLeftAction;
+    public final String mSwipeLeftRightAction;
+    public final String mSwipeRightUpAction;
+    public final String mSwipeRightDownAction;
+    public final String mSwipeRightLeftAction;
+    public final String mSwipeRightRightAction;
 
     // From the input box
     public final InputAttributes mInputAttributes;
@@ -91,6 +99,14 @@ public class SettingsValues {
         mShowNumberRow = Settings.readShowNumberRow(prefs);
         mSpaceSwipeEnabled = Settings.readSpaceSwipeEnabled(prefs);
         mDeleteSwipeEnabled = Settings.readDeleteSwipeEnabled(prefs);
+        mSwipeLeftUpAction = prefs.getString(Settings.PREF_SWIPE_LEFT_UP, "shift");
+        mSwipeLeftDownAction = prefs.getString(Settings.PREF_SWIPE_LEFT_DOWN, "alphabet");
+        mSwipeLeftLeftAction = prefs.getString(Settings.PREF_SWIPE_LEFT_LEFT, "none");
+        mSwipeLeftRightAction = prefs.getString(Settings.PREF_SWIPE_LEFT_RIGHT, "symbols");
+        mSwipeRightUpAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_UP, "none");
+        mSwipeRightDownAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_DOWN, "paste");
+        mSwipeRightLeftAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_LEFT, "undo");
+        mSwipeRightRightAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_RIGHT, "none");
     }
 
     public boolean isWordSeparator(final int code) {

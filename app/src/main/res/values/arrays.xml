@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="swipe_action_entries">
+        <item>@string/swipe_action_none</item>
+        <item>@string/swipe_action_shift</item>
+        <item>@string/swipe_action_symbols</item>
+        <item>@string/swipe_action_alphabet</item>
+        <item>@string/swipe_action_paste</item>
+        <item>@string/swipe_action_undo</item>
+        <item>@string/swipe_action_settings</item>
+    </string-array>
+
+    <string-array name="swipe_action_values">
+        <item>none</item>
+        <item>shift</item>
+        <item>symbols</item>
+        <item>alphabet</item>
+        <item>paste</item>
+        <item>undo</item>
+        <item>settings</item>
+    </string-array>
+</resources>

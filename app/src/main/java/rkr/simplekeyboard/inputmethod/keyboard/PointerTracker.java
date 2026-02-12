@@ -719,9 +719,15 @@ public final class PointerTracker implements PointerTrackerQueue.Element {
             mCursorMoved = false;
             return;
         }
+
         if (mIsTrackingForActionDisabled) {
             return;
         }
+
+        if (detectAndExecuteSwipe(x, y)) {
+            return;
+        }
+
         if (currentKey != null && currentKey.isRepeatable()
                 && (currentKey.getCode() == currentRepeatingKeyCode) && !isInDraggingFinger) {
             return;
@@ -730,6 +736,74 @@ public final class PointerTracker implements PointerTrackerQueue.Element {
         if (isInSlidingKeyInput) {
             callListenerOnFinishSlidingInput();
         }
+    }
+
+    private boolean detectAndExecuteSwipe(final int x, final int y) {
+        final int downX = CoordinateUtils.x(mDownCoordinates);
+        final int downY = CoordinateUtils.y(mDownCoordinates);
+        final int diffX = x - downX;
+        final int diffY = y - downY;
+        final int absX = Math.abs(diffX);
+        final int absY = Math.abs(diffY);
+
+        // Threshold: mMostCommonKeyWidth or fallback
+        final int threshold = (mKeyboard != null) ? mKeyboard.mMostCommonKeyWidth : (sPointerStep * 4);
+
+        if (absX < threshold && absY < threshold) {
+            return false;
+        }
+
+        // Determine direction
+        boolean isHorizontal = absX > absY;
+
+        // Determine Half
+        boolean isLeftHalf = downX < (mKeyboard.mOccupiedWidth / 2);
+
+        String action = "none";
+        // Settings.getInstance().loadSettings(null); // REMOVED: Unsafe
+        rkr.simplekeyboard.inputmethod.latin.settings.SettingsValues settings = Settings.getInstance().getCurrent();
+
+        if (isLeftHalf) {
+            if (isHorizontal) {
+                action = diffX > 0 ? settings.mSwipeLeftRightAction : settings.mSwipeLeftLeftAction;
+            } else {
+                action = diffY > 0 ? settings.mSwipeLeftDownAction : settings.mSwipeLeftUpAction; // y increases downwards
+            }
+        } else {
+             if (isHorizontal) {
+                action = diffX > 0 ? settings.mSwipeRightRightAction : settings.mSwipeRightLeftAction;
+            } else {
+                action = diffY > 0 ? settings.mSwipeRightDownAction : settings.mSwipeRightUpAction;
+            }
+        }
+
+        return executeAction(action);
+    }
+
+    private boolean executeAction(String action) {
+        if ("none".equals(action)) return false;
+
+        if ("shift".equals(action)) {
+            sListener.onPressKey(Constants.CODE_SHIFT, 0, true);
+            sListener.onCodeInput(Constants.CODE_SHIFT, Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
+            sListener.onReleaseKey(Constants.CODE_SHIFT, false);
+        } else if ("symbols".equals(action)) {
+             sListener.onPressKey(Constants.CODE_SWITCH_ALPHA_SYMBOL, 0, true);
+             sListener.onCodeInput(Constants.CODE_SWITCH_ALPHA_SYMBOL, Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
+             sListener.onReleaseKey(Constants.CODE_SWITCH_ALPHA_SYMBOL, false);
+        } else if ("alphabet".equals(action)) {
+             sListener.onPressKey(Constants.CODE_SWITCH_ALPHA_SYMBOL, 0, true);
+             sListener.onCodeInput(Constants.CODE_SWITCH_ALPHA_SYMBOL, Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
+             sListener.onReleaseKey(Constants.CODE_SWITCH_ALPHA_SYMBOL, false);
+        } else if ("paste".equals(action)) {
+            sListener.onCodeInput(Constants.CODE_PASTE, Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
+        } else if ("undo".equals(action)) {
+             sListener.onCustomRequest(Constants.CUSTOM_CODE_DELETE_WORD);
+        } else if ("settings".equals(action)) {
+             sListener.onCodeInput(Constants.CODE_SETTINGS, Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
+        }
+
+        return true;
     }
 
     @Override
