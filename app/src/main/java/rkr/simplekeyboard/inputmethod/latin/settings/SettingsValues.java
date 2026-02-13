@@ -57,6 +57,8 @@ public class SettingsValues {
     public final String mSwipeRightDownAction;
     public final String mSwipeRightLeftAction;
     public final String mSwipeRightRightAction;
+    public final int mSwipeSensitivity;
+    public final int mVibrationDuration;
 
     // From the input box
     public final InputAttributes mInputAttributes;
@@ -107,6 +109,8 @@ public class SettingsValues {
         mSwipeRightDownAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_DOWN, "paste");
         mSwipeRightLeftAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_LEFT, "undo");
         mSwipeRightRightAction = prefs.getString(Settings.PREF_SWIPE_RIGHT_RIGHT, "none");
+        mSwipeSensitivity = Settings.readSwipeSensitivity(prefs);
+        mVibrationDuration = Settings.readVibrationDuration(prefs);
     }
 
     public boolean isWordSeparator(final int code) {

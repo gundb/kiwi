@@ -145,4 +145,6 @@
     <string name="swipe_right_down">Swipe Right Down</string>
     <string name="swipe_right_left">Swipe Right Left</string>
     <string name="swipe_right_right">Swipe Right Right</string>
+    <string name="prefs_swipe_sensitivity">Swipe trigger distance</string>
+    <string name="prefs_vibration_duration_settings">Vibration duration</string>
 </resources>

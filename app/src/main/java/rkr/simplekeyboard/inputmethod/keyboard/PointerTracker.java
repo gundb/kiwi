@@ -746,8 +746,11 @@ public final class PointerTracker implements PointerTrackerQueue.Element {
         final int absX = Math.abs(diffX);
         final int absY = Math.abs(diffY);
 
-        // Threshold: mMostCommonKeyWidth or fallback
-        final int threshold = (mKeyboard != null) ? mKeyboard.mMostCommonKeyWidth : (sPointerStep * 4);
+        rkr.simplekeyboard.inputmethod.latin.settings.SettingsValues settings = Settings.getInstance().getCurrent();
+
+        // Threshold: mMostCommonKeyWidth * (sensitivity / 100.0f) or fallback
+        final float sensitivityFactor = (settings.mSwipeSensitivity / 100.0f);
+        final int threshold = (mKeyboard != null) ? (int)(mKeyboard.mMostCommonKeyWidth * sensitivityFactor) : (sPointerStep * 4);
 
         if (absX < threshold && absY < threshold) {
             return false;
@@ -760,8 +763,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element {
         boolean isLeftHalf = downX < (mKeyboard.mOccupiedWidth / 2);
 
         String action = "none";
-        // Settings.getInstance().loadSettings(null); // REMOVED: Unsafe
-        rkr.simplekeyboard.inputmethod.latin.settings.SettingsValues settings = Settings.getInstance().getCurrent();
 
         if (isLeftHalf) {
             if (isHorizontal) {

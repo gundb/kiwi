@@ -23,6 +23,12 @@
         android:title="@string/vibrate_on_keypress"
         android:defaultValue="@bool/config_default_vibration_enabled"
         android:persistent="true" />
+    <rkr.simplekeyboard.inputmethod.latin.settings.SeekBarDialogPreference
+        android:key="pref_vibration_duration"
+        android:title="@string/prefs_vibration_duration_settings"
+        android:dependency="vibrate_on"
+        latin:maxValue="100"
+        android:defaultValue="15" /> <!-- ms -->
     <SwitchPreference
         android:key="sound_on"
         android:title="@string/sound_on_keypress"

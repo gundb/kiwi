@@ -121,13 +121,16 @@ public final class AudioAndHapticFeedbackManager {
         if (!mSettingsValues.mVibrateOn || mVibrator == null) {
             return;
         }
+        final int duration = mSettingsValues.mVibrationDuration;
+        if (duration <= 0) {
+            return;
+        }
+
         mBackgroundThread.execute(() -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                mVibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK));
-            } else if (viewToPerformHapticFeedbackOn != null) {
-                viewToPerformHapticFeedbackOn.performHapticFeedback(
-                        HapticFeedbackConstants.KEYBOARD_TAP,
-                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mVibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                mVibrator.vibrate(duration);
             }
         });
     }

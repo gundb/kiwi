@@ -72,6 +72,8 @@ public final class Settings extends BroadcastReceiver implements SharedPreferenc
     public static final String PREF_SWIPE_RIGHT_DOWN = "pref_swipe_right_down";
     public static final String PREF_SWIPE_RIGHT_LEFT = "pref_swipe_right_left";
     public static final String PREF_SWIPE_RIGHT_RIGHT = "pref_swipe_right_right";
+    public static final String PREF_SWIPE_SENSITIVITY = "pref_swipe_sensitivity";
+    public static final String PREF_VIBRATION_DURATION = "pref_vibration_duration";
 
     private static final float UNDEFINED_PREFERENCE_VALUE_FLOAT = -1.0f;
     private static final int UNDEFINED_PREFERENCE_VALUE_INT = -1;
@@ -339,5 +341,13 @@ public final class Settings extends BroadcastReceiver implements SharedPreferenc
         // is NOKEYS and if it's not hidden (e.g. folded inside the device).
         return conf.keyboard != Configuration.KEYBOARD_NOKEYS
                 && conf.hardKeyboardHidden != Configuration.HARDKEYBOARDHIDDEN_YES;
+    }
+
+    public static int readSwipeSensitivity(final SharedPreferences prefs) {
+        return prefs.getInt(PREF_SWIPE_SENSITIVITY, 50);
+    }
+
+    public static int readVibrationDuration(final SharedPreferences prefs) {
+        return prefs.getInt(PREF_VIBRATION_DURATION, 15);
     }
 }

@@ -53,6 +53,14 @@
         android:title="@string/delete_swipe"
         android:defaultValue="false" />
 
+    <rkr.simplekeyboard.inputmethod.latin.settings.SeekBarDialogPreference
+        android:key="pref_swipe_sensitivity"
+        android:title="@string/prefs_swipe_sensitivity"
+        latin:minValue="10"
+        latin:maxValue="200"
+        latin:stepValue="10"
+        android:defaultValue="100" /> <!-- % of key width -->
+
     <PreferenceCategory android:title="@string/swipe_gestures">
         <ListPreference
             android:key="pref_swipe_left_up"

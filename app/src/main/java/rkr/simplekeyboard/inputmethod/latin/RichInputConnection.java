@@ -495,15 +495,24 @@ public final class RichInputConnection {
             i -= charCount;
         }
 
-        // Delete until separator or start
-        while (i > 0) {
+        if (i > 0) {
             int cp = Character.codePointBefore(text, i);
             if (settingsValues.isWordSeparator(cp)) {
-                break;
+                // Delete only the separator
+                int charCount = Character.charCount(cp);
+                deleteLength += charCount;
+            } else {
+                // Delete until separator or start
+                while (i > 0) {
+                    cp = Character.codePointBefore(text, i);
+                    if (settingsValues.isWordSeparator(cp)) {
+                        break;
+                    }
+                    int charCount = Character.charCount(cp);
+                    deleteLength += charCount;
+                    i -= charCount;
+                }
             }
-            int charCount = Character.charCount(cp);
-            deleteLength += charCount;
-            i -= charCount;
         }
 
         if (deleteLength > 0) {
