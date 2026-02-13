@@ -14,4 +14,4 @@ ${stdout}`);
   } else {
     res.writeHead(404).end('Not Found');
   }
-}).listen(3000, () => console.log('Server running on port 3000'));
+}).listen(8182, () => console.log('Build Server running on port 8182'));
