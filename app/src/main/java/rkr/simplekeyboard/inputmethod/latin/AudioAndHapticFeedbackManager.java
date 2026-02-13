@@ -121,8 +121,11 @@ public final class AudioAndHapticFeedbackManager {
         if (!mSettingsValues.mVibrateOn || mVibrator == null) {
             return;
         }
-        final int duration = mSettingsValues.mVibrationDuration;
-        if (duration <= 0) {
+        performHapticFeedback(mSettingsValues.mVibrationDuration);
+    }
+
+    public void performHapticFeedback(final int duration) {
+        if (mVibrator == null || duration <= 0) {
             return;
         }
 

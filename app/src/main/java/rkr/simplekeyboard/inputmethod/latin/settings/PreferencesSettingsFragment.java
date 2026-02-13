@@ -19,6 +19,7 @@
 package rkr.simplekeyboard.inputmethod.latin.settings;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -47,6 +48,47 @@ public final class PreferencesSettingsFragment extends SubScreenFragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
             removePreference(Settings.PREF_USE_ON_SCREEN);
         }
+
+        setupSwipeSensitivitySettings();
+    }
+
+    private void setupSwipeSensitivitySettings() {
+        final SharedPreferences prefs = getSharedPreferences();
+        final Resources res = getResources();
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(
+                Settings.PREF_SWIPE_SENSITIVITY);
+        if (pref == null) {
+            return;
+        }
+        pref.setInterface(new SeekBarDialogPreference.ValueProxy() {
+            @Override
+            public void writeValue(final int value, final String key) {
+                prefs.edit().putInt(key, value).apply();
+            }
+
+            @Override
+            public void writeDefaultValue(final String key) {
+                prefs.edit().remove(key).apply();
+            }
+
+            @Override
+            public int readValue(final String key) {
+                return Settings.readSwipeSensitivity(prefs);
+            }
+
+            @Override
+            public int readDefaultValue(final String key) {
+                return 50;
+            }
+
+            @Override
+            public String getValueText(final int value) {
+                return res.getString(R.string.abbreviation_unit_percent, Integer.toString(value));
+            }
+
+            @Override
+            public void feedbackValue(final int value) {}
+        });
     }
 
     @Override
