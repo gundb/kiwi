@@ -1,0 +1,108 @@
+name: KiwiKeyboard
+
+options:
+  bundleIdPrefix: com.kiwi.keyboard
+  deploymentTarget:
+    iOS: "15.0"
+  generateEmptyDirectories: true
+
+packages:
+  KeyboardKit:
+    url: https://github.com/KeyboardKit/KeyboardKit.git
+    exactVersion: 8.9.6
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+
+  KiwiKeyboard:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+
+    sources:
+      - path: KiwiKeyboard
+      - path: Shared
+
+    dependencies:
+      - target: KiwiKeyboardExtension
+        embed: true
+        link: false
+      - package: KeyboardKit
+
+    info:
+      path: KiwiKeyboard/Info.plist
+      properties:
+        CFBundleDisplayName: Kiwi Keyboard
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+    entitlements:
+      path: KiwiKeyboard/KiwiKeyboard.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.kiwi.keyboard
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kiwi.keyboard
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_STYLE: Automatic
+
+    attributes:
+      SystemCapabilities:
+        com.apple.ApplicationGroups.iOS:
+          enabled: 1
+
+  KiwiKeyboardExtension:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "15.0"
+
+    sources:
+      - path: KiwiKeyboardExtension
+      - path: Shared
+
+    dependencies:
+      - package: KeyboardKit
+
+    info:
+      path: KiwiKeyboardExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Kiwi
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        NSExtension:
+          NSExtensionAttributes:
+            IsASCIICapable: true
+            PrefersRightToLeft: false
+            PrimaryLanguage: en-US
+            RequestsOpenAccess: true
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).KeyboardViewController"
+
+    entitlements:
+      path: KiwiKeyboardExtension/KiwiKeyboardExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.kiwi.keyboard
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kiwi.keyboard.extension
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: true
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../../Frameworks"
+
+    attributes:
+      SystemCapabilities:
+        com.apple.ApplicationGroups.iOS:
+          enabled: 1
